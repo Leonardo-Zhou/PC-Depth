@@ -192,7 +192,7 @@ class LightAlign(nn.Module):
         # calculate ratio of photometry
         highlight_mask = mask_or(projected_mask, tgt_highlight_mask)
 
-        delt_min = 0.2
+        delt_min = 0.4
         mask1 = theta_tar < delt_min
         mask2 = theta_src < delt_min
 

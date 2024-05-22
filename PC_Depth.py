@@ -12,8 +12,6 @@ from losses.lightaligh import *
 
 from config import get_training_size
 
-def count_parameters(model):  
-    return sum(p.numel() for p in model.parameters() if p.requires_grad) /1000000
 
 class PC_Depth(LightningModule):
     def __init__(self, hparams):
@@ -64,8 +62,7 @@ class PC_Depth(LightningModule):
             loss_4 = LossF.compute_smooth_loss(tgt_depth, tgt_img)
         else:
             loss_4 = LossF.compute_smooth_loss(tgt_depth, tgt_specular["inpaint"])
-        # loss_6 = LossF.compute_smooth_loss2(imgs["sls"])
-        # loss_6 = LossF.compute_smooth_loss(k, tgt_img)
+
         if self.hparams.hparams.no_point_loss:
             w3 = 0
 

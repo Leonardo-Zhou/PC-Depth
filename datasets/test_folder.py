@@ -22,10 +22,7 @@ def load_sparse_depth(filename):
 def extract_number(filename):
         return int(filename.split('/')[-1].split('.')[0])
 
-def crawl_folder(folder, dataset='nyu'):
-    print("folder: ", folder)
-    # imgs = sorted((folder/'color/').files('*.png') +
-    #               (folder/'color/').files('*.jpg'))
+def crawl_folder(folder, dataset='c3vd'):
 
     if dataset == 'c3vd':
         imgs = sorted(folder.files('*.png'), key=extract_number)
@@ -40,7 +37,7 @@ def crawl_folder(folder, dataset='nyu'):
         def get_image_path(subfolder, frame_index):
             f_str = "{:010d}.png".format(frame_index)
             image_path = os.path.join(folder, subfolder, "image_02/", f_str)
-            # D:\dataset\SCARED_depth\dataset2\keyframe4\groundtruth
+            
             return image_path
 
         def get_image_path2(subfolder:Path, frame_index):
