@@ -1,6 +1,14 @@
 # PC_Depth
 
-> Official implementation of *Unsupervised Photometric-Consistent Depth Estimation from Endoscopic Monocular Video (PC-Depth)*
+Official implementation of *Unsupervised Photometric-Consistent Depth Estimation from Endoscopic Monocular Video (PC-Depth)*
+
+
+The video below shows the results of PC-Depth on the c3vd test sequence:
+
+<video width="640" height="512" controls> 
+  <source src="./readme.assets/demo.mp4" type="video/mp4"> 
+</video> 
+
 
 ## Dataset
 
