@@ -5,8 +5,7 @@ Official implementation of *Unsupervised Photometric-Consistent Depth Estimation
 
 The video below shows the results of PC-Depth on the c3vd test sequence:
 
-<video width="640" height="512" controls> 
-  <source src="./readme.assets/demo.mp4" type="video/mp4"> 
+<video src="./readme.assets/demo.mp4" width="640" height="512" controls="controls"> 
 </video> 
 
 
