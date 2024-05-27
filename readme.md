@@ -86,7 +86,7 @@ Same as [SC-Depth](https://github.com/JiawangBian/sc_depth_pl).
 
 ## Train
 
-We provide a bash script ("scripts/run_train_*.sh"), which shows how to train on C3VD, SCARED. It should be noted that the weight of the smoothing loss is 0.01
+We provide a bash script ("scripts/run_train_*.sh"), which shows how to train on C3VD, SCARED. Since median filtering is applied to the de-highlighted image, it is important to note that the smoothing loss has a weight of 0.001.
 
 
 You need to run these scripts from the root directory of the project to avoid any failures due to path issues.
