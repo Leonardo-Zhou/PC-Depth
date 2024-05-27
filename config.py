@@ -31,7 +31,7 @@ def get_opts():
     parser.add_argument('--geometry_weight', type=float,
                         default=0.1, help='geometry loss weight')
     parser.add_argument('--smooth_weight', type=float,
-                        default=0.1, help='smoothness loss weight')
+                        default=0.01, help='smoothness loss weight')
 
     # loss for PC-Depth
     parser.add_argument('--hightlight_weight', type=float,

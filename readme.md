@@ -86,7 +86,8 @@ Same as [SC-Depth](https://github.com/JiawangBian/sc_depth_pl).
 
 ## Train
 
-We provide a bash script ("scripts/run_train_*.sh"), which shows how to train on C3VD, SCARED. 
+We provide a bash script ("scripts/run_train_*.sh"), which shows how to train on C3VD, SCARED. It should be noted that the weight of the smoothing loss is 0.01
+
 
 You need to run these scripts from the root directory of the project to avoid any failures due to path issues.
 
