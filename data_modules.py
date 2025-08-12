@@ -4,7 +4,7 @@ from torch.utils.data import DataLoader, RandomSampler
 import datasets.custom_transforms as custom_transforms
 from config import get_training_size
 from datasets.train_folders import *
-from datasets.validation_folders import ValidationSet
+# from datasets.validation_folders import ValidationSet
 
 
 class VideosDataModule(LightningDataModule):
