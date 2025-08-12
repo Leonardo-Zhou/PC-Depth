@@ -1,7 +1,7 @@
 export CUDA_VISIBLE_DEVICES=0
 
 # SCARED data path
-DATASET=/dataset/c3vd_train/c3vd/train
+DATASET=/mnt/data/publicData/MICCAI19_SCARED/train
 
 python -W ignore train.py \
     --dataset_dir $DATASET \
@@ -17,4 +17,5 @@ python -W ignore train.py \
     --lr 1e-4 \
     --scheduler_step_size 10 \
     --light_mu 0\
-    --do_color_aug
+    --do_color_aug\
+    --hightlight_weight=0.01
