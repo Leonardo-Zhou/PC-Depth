@@ -112,12 +112,13 @@ class TrainFolder(data.Dataset):
         intrinsics[1, :] *= 1024
 
         sequence_set = []
-        fpath = self.root/"train.txt" if self.train else self.root/"val.txt"
+        # fpath = self.root/"train.txt" if self.train else self.root/"val.txt"
+        fpath = "./splits/endovis/train.txt" if self.train else "./splits/endovis/val.txt"
         print(fpath)
 
         def get_image_path(folder, frame_index):
             f_str = "{:010d}.png".format(frame_index)
-            image_path = os.path.join(self.root, folder, "image_02/", f_str)
+            image_path = os.path.join(self.root, folder, "image_02/data/", f_str)
             return image_path
 
         train_filenames = readlines(fpath)

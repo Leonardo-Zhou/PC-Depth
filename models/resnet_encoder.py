@@ -55,8 +55,22 @@ def resnet_multiimage_input(num_layers, pretrained=False, num_input_images=1):
         block_type, blocks, num_input_images=num_input_images)
 
     if pretrained:
-        loaded = torch.hub.load_state_dict_from_url(
-            models.resnet.model_urls['resnet{}'.format(num_layers)])
+        # 适配新版本的torchvision
+        try:
+            # 旧版本方式
+            loaded = torch.hub.load_state_dict_from_url(
+                models.resnet.model_urls['resnet{}'.format(num_layers)])
+        except AttributeError:
+            # 新版本方式
+            from torchvision.models import ResNet18_Weights, ResNet50_Weights
+            if num_layers == 18:
+                weights = ResNet18_Weights.IMAGENET1K_V1
+            elif num_layers == 50:
+                weights = ResNet50_Weights.IMAGENET1K_V1
+            else:
+                raise ValueError(f"Unsupported resnet layer: {num_layers}")
+            loaded = weights.get_state_dict()
+        
         loaded['conv1.weight'] = torch.cat(
             [loaded['conv1.weight']] * num_input_images, 1) / num_input_images
         model.load_state_dict(loaded)

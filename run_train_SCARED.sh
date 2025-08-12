@@ -10,7 +10,6 @@ python -W ignore train.py \
     --exp_name PC_SCARED \
     --skip_frames 1 \
     --model_version PC-Depth \
-    --point_weight 0.01 \
     --smooth_weight 0.001 \
     --geometry_weight 0.1 \
     --num_epochs 20 \
