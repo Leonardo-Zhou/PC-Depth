@@ -6,11 +6,17 @@ from path import Path
 import random
 import os
 from torchvision import transforms
+import torch.nn.functional as F
 
 from .specular_detection import SpecularDetection
 
 def load_as_float(path):
-    return imread(path).astype(np.float32)
+    try:
+        return imread(path).astype(np.float32)
+    except Exception as e:
+        print(f"Warning: Failed to load image {path}: {e}")
+        # 返回一个默认的黑色图像
+        return np.zeros((256, 320, 3), dtype=np.float32)
 
 
 def generate_sample_index(num_frames, skip_frames, sequence_length):
@@ -140,6 +146,17 @@ class TrainFolder(data.Dataset):
 
     def __getitem__(self, index):
         sample = self.samples[index]
+        
+        # 检查文件是否存在
+        if not os.path.isfile(sample['tgt_img']):
+            print(f"Warning: Target image not found: {sample['tgt_img']}")
+            return self.__getitem__((index + 1) % len(self.samples))
+        
+        for ref_img in sample['ref_imgs']:
+            if not os.path.isfile(ref_img):
+                print(f"Warning: Reference image not found: {ref_img}")
+                return self.__getitem__((index + 1) % len(self.samples))
+        
         tgt_img = load_as_float(sample['tgt_img'])
         ref_imgs = [load_as_float(ref_img) for ref_img in sample['ref_imgs']]
 
@@ -203,6 +220,16 @@ class TrainFolderIA(TrainFolder):
     
     def __getitem__(self, index):
         sample = self.samples[index]
+
+        # 检查文件是否存在
+        if not os.path.isfile(sample['tgt_img']):
+            print(f"Warning: Target image not found: {sample['tgt_img']}")
+            return self.__getitem__((index + 1) % len(self.samples))
+        
+        for ref_img in sample['ref_imgs']:
+            if not os.path.isfile(ref_img):
+                print(f"Warning: Reference image not found: {ref_img}")
+                return self.__getitem__((index + 1) % len(self.samples))
 
         tgt_img = load_as_float(sample['tgt_img'])
         ref_imgs = [load_as_float(ref_img) for ref_img in sample['ref_imgs']]

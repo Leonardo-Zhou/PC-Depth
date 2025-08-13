@@ -63,8 +63,7 @@ class PC_Depth(LightningModule):
         else:
             loss_4 = LossF.compute_smooth_loss(tgt_depth, tgt_specular["inpaint"])
 
-        if self.hparams.hparams.no_point_loss:
-            w3 = 0
+        w3 = 0
 
         loss = w1*loss_1 + w2*loss_2 +  w3*loss_3 + w4*loss_4
 
@@ -121,8 +120,7 @@ class PC_Depth(LightningModule):
         loss_1, loss_2, loss_3, imgs = LossF.compute_PC_loss(tgt_img, ref_imgs, tgt_depth, 
                                                 ref_depths,intrinsics, poses, poses_inv,
                                                 tgt_specular, ref_speculars, self.lightAligh,
-                                                self.hparams.hparams,
-                                                self.current_epoch)
+                                                self.hparams.hparams)
         errs = {'photo_loss': loss_1.item()}
 
         if self.global_step < 10:

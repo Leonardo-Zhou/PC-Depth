@@ -1,8 +1,11 @@
 import configargparse
 
 
-def get_opts():
+def get_opts(args=None):
     parser = configargparse.ArgumentParser()
+
+    if args:
+        return parser.parse_args(args)
 
     # configure file
     parser.add_argument('--config', is_config_file=True,
@@ -34,8 +37,8 @@ def get_opts():
                         default=0.01, help='smoothness loss weight')
 
     # loss for PC-Depth
-    parser.add_argument('--hightlight_weight', type=float,
-                        default=0.01, help='hightlight loss weight')
+    parser.add_argument('--highlight_weight', type=float,
+                        default=0.01, help='highlight loss weight')
     
     # parameters for light align
     parser.add_argument('--light_mu', type=float,
@@ -52,6 +55,8 @@ def get_opts():
                         action='store_true', help='masking dynamic regions')
     parser.add_argument('--no_min_optimize', action='store_true',
                         help='optimize the minimum loss')
+    parser.add_argument('--no_specular_mask', action='store_false',
+                        help='no specular loss')
 
     
     # ablation in HS-SfMLearner

@@ -126,8 +126,8 @@ def compute_PC_loss(tgt_img, ref_imgs, tgt_depth, ref_depths, intrinsics, poses,
             hparams
         )
 
-        specular_loss = specular_loss["hightlight"]
-        point_mask = tgt_specular["hightlight"]
+        # specular_loss is a tensor, not a dict
+        point_mask = tgt_specular["point"] if isinstance(tgt_specular, dict) else tgt_specular
 
         diff_img_list += [diff_img_tmp1, diff_img_tmp2]
         diff_color_list += [diff_color_tmp1, diff_color_tmp2]
@@ -212,8 +212,17 @@ def mask_not(mask):
     return torch.logical_not(mask).to(torch.float32)
 
 def get_unspecular_mask(tgt_mask, ref_mask):
-    tgt_specular_mask = tgt_mask["highlight"]
-    ref_specular_mask = ref_mask["highlight"]
+    # 处理字典类型输入
+    if isinstance(tgt_mask, dict):
+        tgt_specular_mask = tgt_mask["point"]
+    else:
+        tgt_specular_mask = tgt_mask
+        
+    if isinstance(ref_mask, dict):
+        ref_specular_mask = ref_mask["point"]
+    else:
+        ref_specular_mask = ref_mask
+        
     specular_mask = mask_or(tgt_specular_mask, ref_specular_mask)
     unspecular_mask = mask_not(specular_mask)
     return unspecular_mask
@@ -225,8 +234,12 @@ def compute_pairwise_loss_PC(tgt_img, ref_img, tgt_depth, ref_depth,
     """used in PC-Depth"""
     T = pose_vec2mat(pose)
     
+    # 从字典中提取张量
+    tgt_highlight = tgt_mask["point"] if isinstance(tgt_mask, dict) else tgt_mask
+    ref_highlight = ref_mask["point"] if isinstance(ref_mask, dict) else ref_mask
+    
     refined, unrefined, projected_depth, projected_mask, computed_depth, sls_tar, k, specular_loss = lightAligh(
-        ref_img, tgt_img, tgt_depth, tgt_mask, ref_mask, ref_depth, T, intrinsic, padding_mode='zeros')
+        ref_img, tgt_img, tgt_depth, tgt_highlight, ref_highlight, ref_depth, T, intrinsic, padding_mode='zeros')
     
     if not hparams.no_light_align:
         ref_img_warped = refined

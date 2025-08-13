@@ -130,7 +130,7 @@ if __name__ == '__main__':
 
 
     elif dataset == "SCARED":
-        gt_path = "test/SCARED_depth_gt/gt_depths.npz"
+        gt_path = "./splits/endovis/gt_depths.npz"
         pred_depths = np.load(pred_dir, fix_imports=True, encoding='latin1')["data"]
         pred_depths = pred_depths.squeeze()
         gt_depths = np.load(gt_path, fix_imports=True, encoding='latin1')["data"]

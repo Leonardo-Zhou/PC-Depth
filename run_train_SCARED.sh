@@ -17,4 +17,4 @@ python -W ignore train.py \
     --scheduler_step_size 10 \
     --light_mu 0\
     --do_color_aug\
-    --hightlight_weight=0.01
+    --highlight_weight=0.01

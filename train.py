@@ -8,8 +8,29 @@ from SC_Depth import SC_Depth
 from PC_Depth import PC_Depth
 
 import warnings
+import sys
 
-
+def main():
+    if len(sys.argv) > 1:
+        hparams = get_opts()
+    else:
+        debug_args = [
+            '--dataset_dir', '/mnt/data/publicData/MICCAI19_SCARED/train',
+            '--batch_size', 12,
+            '--dataset_name', 'SCARED',
+            '--exp_name', 'PC_SCARED',
+            '--skip_frames', 1,
+            '--model_version', 'PC-Depth',
+            '--smooth_weight', 0.001,
+            '--geometry_weight', 0.1,
+            '--num_epochs', 20,
+            '--lr', 1e-4,
+            '--scheduler_step_size', 10,
+            '--light_mu', 0,
+            '--do_color_aug',
+            '--highlight_weight', 0.01,
+        ]
+        hparams = get_opts()
 if __name__ == '__main__':
     warnings.filterwarnings("ignore", category=DeprecationWarning)
     hparams = get_opts()
