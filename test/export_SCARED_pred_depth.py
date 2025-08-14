@@ -31,7 +31,7 @@ def main():
     system = SC_Depth(hparams)
 
     # load ckpts
-    ckpt_path = "/home/weijunlin/project/PC-Depth/log_old/IA_SCARED/version_2/last.ckpt"
+    ckpt_path = "./log/PC_SCARED/version_0/last.ckpt"
     # ckpt_path = "/home/weijunlin/project/PC-Depth/log2/IA/version_0/last.ckpt"
     system = system.load_from_checkpoint(ckpt_path, strict=False)
 
@@ -48,11 +48,11 @@ def main():
         custom_transforms.ArrayToTensor()]
     )
 
-    root = Path("/dataset/SCARED_train")
-    fpath = root/"test.txt"
+    root = Path("/mnt/data/publicData/MICCAI19_SCARED/train/")
+    fpath = "./splits/endovis/test.txt"
     def get_image_path(folder, frame_index):
         f_str = "{:010d}.png".format(frame_index)
-        image_path = os.path.join(root, folder, "image_02/", f_str)
+        image_path = os.path.join(root, folder, "image_02/data/", f_str)
         return image_path
 
     train_filenames = readlines(fpath)
